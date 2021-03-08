@@ -1,1 +1,17 @@
 # aquaPoney
+
+
+repo pour le code auqaponique
+pour l'instant utilise un raspberry pi
+un capteur de temperature/humidité bme280 i2c
+un relai pour l'activation de la pompe
+le code est principalement du python
+Fastapi pour le Back
+Svelte pour le Front
+
+
+# Pour lancer
+installer docker & docker-compose sur votre machine docker fera le reste
+`docker-compose build`
+`docker-compose up`
+on peu tres bien uitilsé just la partie non server dans le repetoire raspi
