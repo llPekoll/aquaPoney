@@ -15,3 +15,6 @@ installer docker & docker-compose sur votre machine docker fera le reste
 `docker-compose build`
 `docker-compose up`
 on peu tres bien uitilsé just la partie non server dans le repetoire raspi
+copier le fichier
+.envexemple en .env
+dans le root et dans le repertoire raspi
