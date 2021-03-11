@@ -3,8 +3,7 @@ from tortoise import fields
 
 class Sensor_Bme280(Model):
     class Meta:
-        table = "sensor_bme280_values"
-
+        table = "bme280_values"
 
     id = fields.IntField(pk=True)
     date = fields.DatetimeField()
