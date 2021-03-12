@@ -14,8 +14,6 @@ from datetime import datetime
 
 
 
-API_KEY = "yo"
-API_KEY_NAME = "hann"
 
 
 api_key_query = APIKeyQuery(name=API_KEY_NAME, auto_error=False)
@@ -39,6 +37,8 @@ async def get_api_key(
         )
 
 
+API_KEY_NAME = os.environ.get("API_KEY_NAME")
+API_KEY = os.environ.get("API_KEY")
 
 
 user = os.environ.get("PSQL_USER")
