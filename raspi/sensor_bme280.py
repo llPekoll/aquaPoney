@@ -42,6 +42,6 @@ def push_bme280_values():
     req = f"https://{SERVER_IP}/bme280?{APIKEY}"
     print(req)
     print(datas)
-    ret = requests.post(req, data=datas)
+    ret = requests.post(req, json=datas)
     print(ret.json())
 
