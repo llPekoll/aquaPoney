@@ -1,20 +1,23 @@
 import threading
 import time
-from sensor_bme280 import get_bme280_values
+from sensor_bme280 import get_bme280_values, push_bme280_values
 
 
 def infiniteloop1():
     while True:
         bme280 = get_bme280_values()
+        try:
+            push_bme280_values()
+        except Exception as e:
+            print(e)
         print(bme280)
-        time.sleep(60)
+        print("values pusehs")
+        time.sleep(3600)
 
 def infiniteloop2():
     while True:
         print('running the pompe')
         time.sleep(1)
-        # infintie loop for pompe
-            # every 2 hours open the pompe close the popme after 5 minutes or check the water level
         time.sleep(10)
         print('clossing pompe')
 

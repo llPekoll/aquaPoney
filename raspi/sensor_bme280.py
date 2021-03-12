@@ -20,10 +20,10 @@ bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 bme280.sea_level_pressure = 1013.25
 
 def get_bme280_values():
-    vals = "\nTemperature: {bme280.temperature:0.1f} C"
-    vals += "\nHumidity: {bme280.relative_humidity:0.1f} %"
-    vals += "\nPressure: {bme280.pressure:0.1f} hPa"
-    vals += "\nAltitude: {bme280.altitude:0.2f} meters"
+    vals = f"\nTemperature: {bme280.temperature:0.1f} C"
+    vals += f"\nHumidity: {bme280.relative_humidity:0.1f} %"
+    vals += f"\nPressure: {bme280.pressure:0.1f} hPa"
+    vals += f"\nAltitude: {bme280.altitude:0.2f} meters"
     return vals
 
 def push_bme280_values():
@@ -34,6 +34,6 @@ def push_bme280_values():
         "altitude": f"{bme280.altitude:0.2f}",
     }
     SERVER_IP = os.environ.get("SERVER_IP")
-    APIKEY = os.environ.get("APIKEY")
+    APIKEY = f"{os.environ.get('API_KEY_NAME')}={os.environ.get('API_KEY')}"
     requests.post('https://{SERVER_IP}/bme280?{APIKEY}', data = {'key':'value'})
 
