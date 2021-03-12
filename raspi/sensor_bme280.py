@@ -35,5 +35,6 @@ def push_bme280_values():
     }
     SERVER_IP = os.environ.get("SERVER_IP")
     APIKEY = f"{os.environ.get('API_KEY_NAME')}={os.environ.get('API_KEY')}"
-    requests.post('https://{SERVER_IP}/bme280?{APIKEY}', data = {'key':'value'})
+    req = f"https://{SERVER_IP}/bme280?{APIKEY}"
+    requests.post(req, data = {'key':'value'})
 
