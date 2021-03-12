@@ -23,3 +23,12 @@ dans le root et dans le repertoire raspi
 # postgres database creation
 docker exec -it  2f2ab7fb351d psql -U admin postgres
 CREATE DATABASE aqua;
+
+
+# SCreen to keep the process workin
+
+apt-get install screen
+then screen
+then lauch the script
+then
+`Ctrl+Shift+A` then `D`
