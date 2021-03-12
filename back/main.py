@@ -1,3 +1,4 @@
+from random import randint
 import os
 from fastapi import Security, Depends, FastAPI, HTTPException, Body, Request
 from fastapi.security.api_key import APIKeyQuery, APIKeyHeader, APIKey
@@ -49,7 +50,6 @@ host =os.environ.get("PSQL_HOST")
 server = f"{host}:{port}"
 url = f"postgres://{user}:{password}@{server}/{db}"
 
-
 register_tortoise(
     app,
     db_url=url,
@@ -58,10 +58,9 @@ register_tortoise(
     add_exception_handlers=True,
 )
 
-
 templates = Jinja2Templates(directory="/front/public/")
 app.mount("/static", StaticFiles(directory="/front/public/"), name="static")
-
+rand_value = randint(1, 303423424234)
 
 @app.get("/")
 def heath(request: Request):
@@ -69,6 +68,7 @@ def heath(request: Request):
         "index.html",
         {
             "request": request,
+            "rand_val": rand_value,
         },
     )
 

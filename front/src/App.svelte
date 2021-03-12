@@ -1,9 +1,14 @@
 <script lang="ts">
 	import  Chart  from "./Chart.svelte";
+	import  Fork  from "./Fork.svelte";
 </script>
+
+
+
 
 <main>
 	<h1>Aquaponics!</h1>
+<Fork />
 <Chart />
 </main>
 

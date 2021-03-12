@@ -18,3 +18,8 @@ on peu tres bien uitilsé just la partie non server dans le repetoire raspi
 copier le fichier
 .envexemple en .env
 dans le root et dans le repertoire raspi
+
+
+# postgres database creation
+docker exec -it  2f2ab7fb351d psql -U admin postgres
+CREATE DATABASE aqua;
