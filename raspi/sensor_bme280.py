@@ -29,10 +29,10 @@ def get_bme280_values():
 def push_bme280_values():
     print(1)
     datas = {
-        "temperature":f"{bme280.temperature:0.1f}",
-        "humidity": f"{bme280.relative_humidity:0.1f}",
-        "pressure": f"{bme280.pressure:0.1f}",
-        "altitude": f"{bme280.altitude:0.2f}",
+        "temperature":float(f"{bme280.temperature:0.1f}"),
+        "humidity": float(f"{bme280.relative_humidity:0.1f}"),
+        "pressure": float(f"{bme280.pressure:0.1f}"),
+        "altitude": float(f"{bme280.altitude:0.2f}"),
     }
     print(2)
     SERVER_IP = os.environ.get("SERVER_IP")
