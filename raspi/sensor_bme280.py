@@ -29,8 +29,8 @@ def get_bme280_values():
 def push_bme280_values():
     print(1)
     datas = {
-        "temperature":float(f"{bme280.temperature:0.1f}"),
         "humidity": float(f"{bme280.relative_humidity:0.1f}"),
+        "temperature":float(f"{bme280.temperature:0.1f}"),
         "pressure": float(f"{bme280.pressure:0.1f}"),
         "altitude": float(f"{bme280.altitude:0.2f}"),
     }
@@ -42,6 +42,6 @@ def push_bme280_values():
     req = f"https://{SERVER_IP}/bme280?{APIKEY}"
     print(req)
     print(datas)
-    ret = requests.post(req, data = {'key':'value'})
+    ret = requests.post(req, data=datas)
     print(ret.json())
 
