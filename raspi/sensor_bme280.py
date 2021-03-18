@@ -7,7 +7,7 @@ import board
 import busio
 import adafruit_bme280
 import requests
-import setproctitle
+from setproctitle import setproctitle
 # Create library object using our Bus I2C port
 setproctitle("bme280")
 
