@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 import os
 from datetime import datetime
-
+import time
 import board
 import busio
 import adafruit_bme280
@@ -45,3 +45,6 @@ def push_bme280_values():
     ret = requests.post(req, json=datas)
     print(ret.json())
 
+while True:
+    push_bme280_values()
+    time.sleep(3600)
