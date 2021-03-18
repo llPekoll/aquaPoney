@@ -10,6 +10,8 @@
 	<h1>Aquaponics!</h1>
 <Fork />
 <Chart />
+
+Stack -> Nginx, Docker, Python, Raspberry, Svelte
 </main>
 
 <style>

@@ -32,3 +32,12 @@ then screen
 then lauch the script
 then
 `Ctrl+Shift+A` then `D`
+
+# insall Docker
+apt-get install docker.io
+pip3 install docker-compose
+
+
+# I2C SENSOR
+
+i2cdetect -y 1
