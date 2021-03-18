@@ -6,6 +6,6 @@ RUN apt-get update
 RUN apt-get upgrade
 RUN apt-get install -y gcc
 COPY ./requirements.txt /back/requirements.txt
-RUN pip install adafruit_bme280 requests board
+RUN pip install adafruit_bme280 requests setproctitle
 WORKDIR /raspi
 

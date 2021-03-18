@@ -7,7 +7,10 @@ import board
 import busio
 import adafruit_bme280
 import requests
+import setproctitle
 # Create library object using our Bus I2C port
+setproctitle("bme280")
+
 i2c = busio.I2C(board.SCL, board.SDA)
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 
@@ -27,21 +30,15 @@ def get_bme280_values():
     return vals
 
 def push_bme280_values():
-    print(1)
     datas = {
         "humidity": float(f"{bme280.relative_humidity:0.1f}"),
         "temperature":float(f"{bme280.temperature:0.1f}"),
         "pressure": float(f"{bme280.pressure:0.1f}"),
         "altitude": float(f"{bme280.altitude:0.2f}"),
     }
-    print(2)
     SERVER_IP = os.environ.get("SERVER_IP")
-    print(3)
     APIKEY = f"{os.environ.get('API_KEY_NAME')}={os.environ.get('API_KEY')}"
-    print(4)
     req = f"https://{SERVER_IP}/bme280?{APIKEY}"
-    print(req)
-    print(datas)
     ret = requests.post(req, json=datas)
     print(ret.json())
 
