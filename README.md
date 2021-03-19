@@ -36,8 +36,12 @@ then
 # insall Docker
 apt-get install docker.io
 pip3 install docker-compose
+python3 -m pip install pyserial
 
 
 # I2C SENSOR
 
 i2cdetect -y 1
+
+arduio via cli
+https://www.youtube.com/watch?v=J-qGn1eEidA&t=4s
