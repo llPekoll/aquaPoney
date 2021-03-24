@@ -11,3 +11,29 @@ class Sensor_Bme280(Model):
     temperature = fields.FloatField()
     pressure = fields.FloatField()
     altitude = fields.FloatField()
+
+class Maree(Model):
+    class Meta:
+        table = "marees"
+
+    id = fields.IntField(pk=True)
+    date = fields.DatetimeField()
+    pump_state = fields.BooleanField()
+
+class WaterLevel(Model):
+    class Meta:
+        table = "waterlevels"
+
+    id = fields.IntField(pk=True)
+    date = fields.DatetimeField()
+    water_level = fields.IntField()
+
+
+class Ph(Model):
+    class Meta:
+        table = "Phs"
+
+    id = fields.IntField(pk=True)
+    date = fields.DatetimeField()
+    ph = fields.IntField()
+    temperature = fields.IntField()

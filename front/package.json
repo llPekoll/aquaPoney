@@ -29,6 +29,7 @@
     "layercake": "^4.0.4",
     "mdbsvelte": "^1.0.12",
     "sirv-cli": "^1.0.0",
-    "svelte-chartjs": "^1.0.1"
+    "svelte-chartjs": "^1.0.1",
+    "svelte-twitter-widgets": "^0.1.0"
   }
 }

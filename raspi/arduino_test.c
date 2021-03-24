@@ -10,8 +10,9 @@ unsigned char low_data[8] = {0};
 unsigned char high_data[12] = {0};
 int           pinPump = 6;
 int           waterLevel=0;
-unsigned long closedDelay=3600000;// 1 hour
+unsigned long rebootValue=3600000;// 1 hour
 unsigned long openDelay=500;// half a second
+unsigned long counter=3600000;// 1 hour
  
  
 #define NO_TOUCH       0xFE
@@ -63,10 +64,11 @@ void check()
   int sensorvalue_max = 255;
   int low_count = 0;
   int high_count = 0;
-  
+  bool pump_open_in_cicle = false;
+  counter = 0
   while (1)
   {
-    
+
     uint32_t touch_val = 0;
     uint8_t trig_section = 0;
     low_count = 0;
@@ -105,15 +107,31 @@ void check()
       touch_val >>= 1;
     }
     waterLevel = trig_section * 5;
-    if(waterLevel>50)
+    counter ++;
+    if (counter > rebootValue)
     {
-      closePump();  
+      counter = 0;
+      pump_open_in_cicle = false;
     }
-    if(waterLevel<0)
+    if(waterLevel <= 0)
     {
       openPump();
+      pump_open_in_cicle = true
     }
+
+    if(waterLevel>50)
+    {
+      closePump();
+      pump_open_in_cicle = false;  
+    }
+    // if(waterLevel<0)
+    // {
+    //   openPump();
+    // }
+    SERIAL.println("waterLevel");
     SERIAL.println(waterLevel);
+    SERIAL.println("counter");
+    SERIAL.println(counter);
   }
 }
  

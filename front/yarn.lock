@@ -846,6 +846,11 @@ svelte-preprocess@^4.0.0:
     detect-indent "^6.0.0"
     strip-indent "^3.0.0"
 
+svelte-twitter-widgets@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/svelte-twitter-widgets/-/svelte-twitter-widgets-0.1.0.tgz#b45b219c2bc70f8c84b2063bf6590b197cd84b21"
+  integrity sha512-JMOfJG2544v73SLzNtlW2iOIyRxMMqZRi3OOGn7V6vSfOBIY7BEqkAdZ3OcuUrfyEzfj/cq/YdsckRmdpm1gWw==
+
 svelte@^3.0.0:
   version "3.35.0"
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.35.0.tgz#e0d0ba60c4852181c2b4fd851194be6fda493e65"
