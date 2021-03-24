@@ -9,6 +9,7 @@ RUN rm -rf front/public/build
 RUN rm -rf front/package-lock.json 
 RUN rm -rf front/yarn.lock 
 
+RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 
