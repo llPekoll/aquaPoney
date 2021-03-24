@@ -17,6 +17,8 @@ jobs:
             whoami
             ls -al
             cd aquaPoney
+            git checkout .
+            git pull
             ls -al
             docker-compose build
-            docker-compose up
+            docker-compose up -d
