@@ -21,14 +21,13 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" |  tee /etc/apt/source
 RUN apt-get update
 RUN apt-get install yarn -y
 
-WORKDIR /front
-RUN yarn install --frozen-lockfile
-RUN yarn run build
+RUN yarn --cwd /front/ install --frozen-lockfile
+RUN yarn yarn --cwd /front/ run build
+
 RUN rm public/build/bundle.css.map
 RUN rm public/build/bundle.js.map
 
 COPY ./requirements.txt /back/requirements.txt
 RUN pip install fastapi uvicorn tortoise-orm[asyncpg] jinja2 aiofiles
-WORKDIR /
 
 EXPOSE 8000
