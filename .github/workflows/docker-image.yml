@@ -15,7 +15,8 @@ jobs:
         port: 22
         script: |
             whoami
-            cd aquaponey
+            ls -al
+            cd aquaPoney
             ls -al
             docker-compose build
             docker-compose up
