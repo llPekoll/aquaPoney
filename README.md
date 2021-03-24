@@ -46,6 +46,6 @@ i2cdetect -y 1
 arduio via cli
 https://www.youtube.com/watch?v=J-qGn1eEidA&t=4s
 
-# ZSH raspi
+# ZSH raspif
 
 https://gist.github.com/anthonyray/08f805138c2b37c2554b777ea96513f2
