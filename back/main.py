@@ -2,6 +2,7 @@ from random import randint
 import os
 from fastapi import Security, Depends, FastAPI, HTTPException, Body, Request
 from fastapi.security.api_key import APIKeyQuery, APIKeyHeader, APIKey
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.status import HTTP_403_FORBIDDEN
@@ -23,6 +24,22 @@ api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 
 
 app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 async def get_api_key(
     api_key_query: str = Security(api_key_query),
