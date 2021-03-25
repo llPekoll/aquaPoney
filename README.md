@@ -49,3 +49,8 @@ https://www.youtube.com/watch?v=J-qGn1eEidA&t=4s
 # ZSH raspif
 
 https://gist.github.com/anthonyray/08f805138c2b37c2554b777ea96513f2
+
+
+arduino-cli sketch new cli-aqua
+arduino-cli compile --fqbn arduino:avr:nano cli-aqua -v
+arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:nano cli-aqua -v
