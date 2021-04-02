@@ -1,6 +1,7 @@
 from tortoise.models import Model
 from tortoise import fields
 
+
 class Sensor_Bme280(Model):
     class Meta:
         table = "bme280_values"
@@ -12,6 +13,7 @@ class Sensor_Bme280(Model):
     pressure = fields.FloatField()
     altitude = fields.FloatField()
 
+
 class Maree(Model):
     class Meta:
         table = "marees"
@@ -19,6 +21,7 @@ class Maree(Model):
     id = fields.IntField(pk=True)
     date = fields.DatetimeField()
     pump_state = fields.BooleanField()
+
 
 class WaterLevel(Model):
     class Meta:
