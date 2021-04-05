@@ -1,129 +1,119 @@
 #include <Wire.h>
- 
-#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
-#define SERIAL SerialUSB
-#else
-#define SERIAL Serial
-#endif
- 
-unsigned char low_data[8] = {0};
-unsigned char high_data[12] = {0};
-int           pinPump = 6;
-int           waterLevel=0;
-unsigned long closedDelay=3600000;// 1 hour
-unsigned long openDelay=500;// half a second
- 
- 
-#define NO_TOUCH       0xFE
-#define THRESHOLD      100
-#define ATTINY1_HIGH_ADDR   0x78
-#define ATTINY2_LOW_ADDR   0x77
- 
-void getHigh12SectionValue(void)
-{
-  memset(high_data, 0, sizeof(high_data));
-  Wire.requestFrom(ATTINY1_HIGH_ADDR, 12);
-  while (12 != Wire.available());
- 
-  for (int i = 0; i < 12; i++) {
-    high_data[i] = Wire.read();
-  }
-  delay(10);
-}
- 
-void getLow8SectionValue(void)
-{
-  memset(low_data, 0, sizeof(low_data));
-  Wire.requestFrom(ATTINY2_LOW_ADDR, 8);
-  while (8 != Wire.available());
- 
-  for (int i = 0; i < 8 ; i++) {
-    low_data[i] = Wire.read(); // receive a byte as character
-  }
-  delay(10);
-}
 
-void closePump(void)
-{
-    digitalWrite(pinPump, HIGH);
-    SERIAL.println("colsed");
-    delay(closedDelay);
-}
+// oustside temp
+#include "DHT.h"
+#define DHTPIN 4
+#define DHTTYPE DHT22
+DHT dht(DHTPIN, DHTTYPE);
 
-void openPump(void)
+//screen
+#include "rgb_lcd.h"
+rgb_lcd lcd;
+
+// master code
+const int pinPump = 6;
+bool pumpIsOpen = false;
+unsigned int counter = 0;
+unsigned int cycleNumber = 0;
+
+void loopScreen(unsigned int timeLeft, unsigned int cycleNumber)
 {
-     digitalWrite(pinPump, LOW); 
-    SERIAL.println("open");
-    delay(openDelay);
+  char discplayString[16];
+  lcd.clear();
+
+  lcd.setCursor(0, 0);
+  lcd.print("Nxt cycl,cycl Nb");
+  lcd.setCursor(0, 1);
+  discplayString[0] = '\0';
+  sprintf(discplayString, "%d s, %d c", timeLeft, cycleNumber);
+  lcd.print(discplayString);
 }
 
 void check()
 {
-  int sensorvalue_min = 250;
-  int sensorvalue_max = 255;
-  int low_count = 0;
-  int high_count = 0;
-  
-  while (1)
+  const unsigned int timeLeftOpen = 32;
+  const unsigned int cycleTime = 300;
+  if (counter == 0)
   {
-    
-    uint32_t touch_val = 0;
-    uint8_t trig_section = 0;
-    low_count = 0;
-    high_count = 0;
-    getLow8SectionValue();
-    getHigh12SectionValue();
-    for (int i = 0; i < 8; i++)
+    if (!pumpIsOpen)
     {
-      if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
-      {
-        low_count++;
-      }
+      digitalWrite(pinPump, LOW);
+      Serial.println("pump open");
+      pumpIsOpen = true;
     }
-    for (int i = 0; i < 12; i++)
-    {
- 
-      if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
-      {
-        high_count++;
-      }
-    }
-
-    for (int i = 0 ; i < 8; i++) {
-      if (low_data[i] > THRESHOLD) {
-        touch_val |= 1 << i;
-      }
-    }
-    for (int i = 0 ; i < 12; i++) {
-      if (high_data[i] > THRESHOLD) {
-        touch_val |= (uint32_t)1 << (8 + i);
-      }
-    }
-    while (touch_val & 0x01)
-    {
-      trig_section++;
-      touch_val >>= 1;
-    }
-    waterLevel = trig_section * 5;
-    if(waterLevel>50)
-    {
-      closePump();  
-    }
-    if(waterLevel<0)
-    {
-      openPump();
-    }
-    SERIAL.println(waterLevel);
   }
-}
- 
-void setup() {
-  pinMode(pinPump, OUTPUT);
 
-  SERIAL.begin(115200);
-  Wire.begin();
+  if (counter > timeLeftOpen)
+  {
+    if (pumpIsOpen)
+    {
+      digitalWrite(pinPump, HIGH);
+      Serial.println("pump stoped");
+      pumpIsOpen = false;
+    }
+  }
+  float temp_hum_val[2] = {0};
+  if (!dht.readTempAndHumidity(temp_hum_val))
+  {
+    // Humidity
+    Serial.println(temp_hum_val[0]);
+    // Temperature
+    Serial.println(temp_hum_val[1]);
+  }
+  else
+  {
+    Serial.println("Failed to get temprature and humidity value.");
+  }
+
+  counter++;
+  if (counter > cycleTime)
+  {
+    cycleNumber++;
+    counter = 0;
+    Serial.println("cycle finished");
+  }
+
+  unsigned int timeLeft = cycleTime - counter;
+  loopScreen(timeLeft, cycleNumber);
+  Serial.print("ctn: ");
+  Serial.print(counter);
+  Serial.print(",pump: ");
+  Serial.print(pumpIsOpen);
+  Serial.print(",humi: ");
+  Serial.print(temp_hum_val[0]);
+  Serial.print(",temp: ");
+  Serial.print(temp_hum_val[1]);
+  Serial.print("\n");
+  delay(1000);
 }
- 
+
+void setupPump()
+{
+  pinMode(pinPump, OUTPUT);
+}
+
+void setupScreen()
+{
+  const int colorR = 255;
+  const int colorG = 0;
+  const int colorB = 0;
+
+  lcd.begin(16, 2);
+  lcd.setRGB(colorR, colorG, colorB);
+}
+void setupTemp()
+{
+  dht.begin();
+}
+void setup()
+{
+  Wire.begin();
+  Serial.begin(115200);
+  setupPump();
+  setupTemp();
+  setupScreen();
+}
+
 void loop()
 {
   check();

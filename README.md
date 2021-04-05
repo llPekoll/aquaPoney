@@ -1,5 +1,7 @@
 # aquaPoney
 
+https://aquaponics.ltd/
+https://aquaponics.studio/
 
 repo pour le code auqaponique
 pour l'instant utilise un raspberry pi
@@ -54,3 +56,11 @@ https://gist.github.com/anthonyray/08f805138c2b37c2554b777ea96513f2
 arduino-cli sketch new cli-aqua
 arduino-cli compile --fqbn arduino:avr:nano cli-aqua -v
 arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:nano cli-aqua -v
+
+
+# matos
+Capteur de température Grove 101990019
+Capteur d'humidité et de T° Grove 101020019
+Module relais Grove 103020005
+Afficheur LCD I2C Grove 104020112
+`https://www.arduino.cc/en/Tutorial/LibraryExamples/HelloWorld`
