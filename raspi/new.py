@@ -14,7 +14,7 @@ while True:
     number = ser.read()
     if number != b'':
         logging.info(number)
-        print(number)
+        
 
 # while True:
 #     time.sleep(1) # in sec
