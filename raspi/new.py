@@ -24,8 +24,7 @@ app_log.addHandler(my_handler)
 port = "/dev/ttyUSB0" # RASPI
 ser = serial.Serial(port, 115200, timeout=1)
 ser.flush()
-if os.path.isfile(logFile):
-    os.remove(logFile)
+
 while True:
     number = ser.readline()
     if number != b'':
