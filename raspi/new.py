@@ -2,15 +2,31 @@ import os
 import serial
 import time
 import logging
+from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(filename='output.log', level=logging.DEBUG)
+log_formatter = logging.Formatter('%(asctime)s %(levelname)s %(funcName)s(%(lineno)d) %(message)s')
+logFile = 'output.log'
 
+if os.path.isfile(logFile):
+    os.remove(logFile)
 
-port = "/dev/ttyUSB0"
+my_handler = RotatingFileHandler(logFile, mode='a', maxBytes=2*1024*1024, 
+                                 backupCount=2, encoding=None, delay=0)
+my_handler.setFormatter(log_formatter)
+my_handler.setLevel(logging.INFO)
+
+app_log = logging.getLogger('root')
+app_log.setLevel(logging.INFO)
+
+app_log.addHandler(my_handler)
+
+# port = "/dev/cu.usbserial-1420" # OSX
+port = "/dev/ttyUSB0" # RASPI
 ser = serial.Serial(port, 115200, timeout=1)
 ser.flush()
-
+if os.path.isfile(logFile):
+    os.remove(logFile)
 while True:
     number = ser.readline()
     if number != b'':
-        logging.info(number)
+        app_log.info(number)
