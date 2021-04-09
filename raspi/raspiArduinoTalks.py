@@ -3,6 +3,9 @@ import time
 
 import logging
 from logging.handlers import RotatingFileHandler
+# Arduino raspiconnection
+
+# https://roboticsbackend.com/raspberry-pi-arduino-serial-communication/#:~:text=The%20easiest%20way%20is%20to,Arduino%20IDE)%20to%20your%20board.
 
 # port = "/dev/cu.usbserial-1420" # OSX
 port = "/dev/ttyUSB0"  # RASPI
@@ -13,8 +16,8 @@ ser.flush()
 
 class Counter:
     counter = 0
-    time_left_open = 17
-    cycle_time = 180
+    time_left_open = 10
+    cycle_time = 120
     cycle_number = 0
     pump_is_open = False
 
@@ -47,7 +50,7 @@ while True:
         ser.write(b"openPump\n")
         app_log.info(f" open pump")
         counter_one.pump_is_open = True
-    if counter_one.counter > counter_one.time_left_open:
+    if counter_one.counter == counter_one.time_left_open:
         ser.write(b"closePump\n")
         app_log.info(f" open close")
         counter_one.pump_is_open = False
