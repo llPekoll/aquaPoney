@@ -8,6 +8,7 @@ import busio
 import adafruit_bme280
 import requests
 from setproctitle import setproctitle
+
 # Create library object using our Bus I2C port
 setproctitle("bme280")
 
@@ -22,6 +23,7 @@ bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 # change this to match the location's pressure (hPa) at sea level
 bme280.sea_level_pressure = 1013.25
 
+
 def get_bme280_values():
     vals = f"\nTemperature: {bme280.temperature:0.1f} C"
     vals += f"\nHumidity: {bme280.relative_humidity:0.1f} %"
@@ -29,10 +31,11 @@ def get_bme280_values():
     vals += f"\nAltitude: {bme280.altitude:0.2f} meters"
     return vals
 
+
 def push_bme280_values():
     datas = {
         "humidity": float(f"{bme280.relative_humidity:0.1f}"),
-        "temperature":float(f"{bme280.temperature:0.1f}"),
+        "temperature": float(f"{bme280.temperature:0.1f}"),
         "pressure": float(f"{bme280.pressure:0.1f}"),
         "altitude": float(f"{bme280.altitude:0.2f}"),
     }
@@ -41,6 +44,7 @@ def push_bme280_values():
     req = f"https://{SERVER_IP}/bme280?{APIKEY}"
     ret = requests.post(req, json=datas)
     print(ret.json())
+
 
 while True:
     push_bme280_values()
